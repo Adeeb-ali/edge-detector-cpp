@@ -127,33 +127,6 @@ This allows you to:
 
 ---
 
-## 🚀 Usage Example
-```cpp
-#include "stb/im_mat.h"
-#include "gaussian/gaussian.h"
-#include "sobel/sobel.h"
-// ... include other modules
-
-int main() {
-    // Load image
-    auto img = loadImage("image/input.png");
-    
-    // Apply Canny pipeline
-    auto blurred = gaussianBlur(img);
-    auto gradients = computeGradients(blurred);
-    auto edges = nonMaxSuppression(gradients);
-    auto thresholded = doubleThreshold(edges);
-    auto final = hysteresis(thresholded);
-    
-    // Save result
-    saveImage("image/output.png", final);
-    
-    return 0;
-}
-```
-
----
-
 ## 🔧 Technical Details
 
 ### Gaussian Blur
