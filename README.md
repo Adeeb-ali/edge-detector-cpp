@@ -106,7 +106,7 @@ g++ main.cpp build/libedge.a -o edge_app
 
 The Canny Edge Detection algorithm follows these steps:
 
-1. **Gaussian Blur** - Reduce noise using a 5×5 Gaussian kernel
+1. **Gaussian Blur** - Reduce noise using a 3 by 3 Gaussian kernel
 2. **Gradient Calculation** - Compute intensity gradients using Scharr operators
 3. **Non-Maximum Suppression** - Thin edges by suppressing non-peak gradients
 4. **Double Thresholding** - Classify edges as strong, weak, or non-edges
@@ -130,8 +130,8 @@ This allows you to:
 ## 🔧 Technical Details
 
 ### Gaussian Blur
-- **Kernel Size**: 5×5
-- **Sigma**: Configurable (default: 1.4)
+- **Kernel Size**: 3×3
+- **Sigma**: Configurable (default: 1)
 - **Purpose**: Noise reduction before edge detection
 
 ### Gradient Computation
@@ -206,23 +206,7 @@ SOFTWARE.
 
 ---
 
-## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Contribution Guidelines
-- Follow existing code style
-- Add comments for complex algorithms
-- Update documentation for new features
-- Test your changes thoroughly
-
----
 
 ## 📧 Contact
 
@@ -239,14 +223,6 @@ For questions, suggestions, or feedback:
 - **STB Libraries** - For image I/O utilities
 - **Community** - For various tutorials and resources
 
----
 
-## ⭐ Star History
-
-If you find this project useful, please consider giving it a star! ⭐
-
----
-
-**Built with ❤️ for learning and exploration in computer vision**
 
 > "Understanding the fundamentals makes you a better engineer" 🚀
