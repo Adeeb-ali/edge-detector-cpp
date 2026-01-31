@@ -82,6 +82,7 @@ void matrix_to_image(
 
 
 
+
 vector<vector<int>> apply_operation_for_detction(
     const vector<vector<float>>& input
 ) {
@@ -112,8 +113,9 @@ vector<vector<int>> apply_operation_for_detction(
 
 int main() {
 
-    const char* inputPath  ="D:\\Edge_detection_using_C++\\image\\Adeeb_Ali.jpg";
-    const char* outputPath ="image/output_edges.png";
+    const char* inputPath  ="image\\Adeeb_.jpg";
+;   
+    const char* outputPath ="results\\output_edges.png";
 
     auto image_int = image_to_matrix(inputPath);
     if (image_int.empty()) return 0;
