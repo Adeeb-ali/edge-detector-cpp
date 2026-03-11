@@ -72,7 +72,7 @@ Canny-Edge-Detector-using-c-/
 ```bash
 g++ -c stb/im_mat.cpp -o build/im_mat.o
 g++ -c stb/mat_im.cpp -o build/mat_im.o
-g++ -c gaussian/gaussian.cpp -o build/gaussian.o
+g++ -c Gussian/gussian.cpp -o build/gussian.o
 g++ -c sobel/sobel.cpp -o build/sobel.o
 g++ -c non_maximum_suppression/nms.cpp -o build/nms.o
 g++ -c threshold/threshold.cpp -o build/threshold.o
