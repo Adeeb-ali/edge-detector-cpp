@@ -1,3 +1,4 @@
+Manual Setup
 step1.
 g++ -c stb/im_mat.cpp -o build/im_mat.o
 g++ -c stb/mat_im.cpp -o build/mat_im.o
@@ -9,7 +10,82 @@ g++ -c hysteresis/hy.cpp -o build/hy.o
 g++ -c morphology/dilation.cpp -o build/dilation.o
 g++ -c morphology/erosion.cpp -o build/erosion.o
 
-step2.ar rcs build/libedge.a build/im_mat.o build/mat_im.o build/gussian.o build/sobel.o build/nms.o build/threshold.o build/hy.o build/dilation.o build/erosion.o
+step2.
+ar rcs build/libedge.a build/im_mat.o build/mat_im.o build/gussian.o build/sobel.o build/nms.o build/threshold.o build/hy.o build/dilation.o build/erosion.o
 
 step3.
 g++ main.cpp build/libedge.a -o edge_app
+
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+EDGE DETECTOR - DOCKER SETUP GUIDE(Recommend)
+
+1. BUILD THE DOCKER IMAGE
+Run this command once to compile the C++ edge detector inside Docker.
+
+docker build -t edge-detector .
+
+
+2. RUN THE PROGRAM WITH A LOCAL IMAGE (PowerShell)
+
+This command mounts your current folder into the Docker container so the program can read input images and save results on your computer.
+
+docker run -v ${PWD}:/data edge-detector /data/image/Adeeb_.jpg /data/results/output.png
+
+
+3. EXPLANATION
+
+${PWD}  = current folder path
+
+/data   = folder inside the Docker container
+
+So the container reads:
+data/image/Adeeb_.jpg
+
+and writes the result to:
+data/results/output.png
+
+
+4. EXAMPLE
+
+If your input image is:
+
+image/dog.jpg
+
+run:
+
+docker run -v ${PWD}:/data edge-detector /data/image/dog.jpg /data/results/dog_edges.png
+
+
+5. WHERE THE RESULT WILL APPEAR
+
+The processed image will be saved on your computer here:
+
+results/output.png
+
+
+6. IMPORTANT
+
+Make sure the following folders exist before running:
+
+image/
+results/
+training_data/
+
+
+7. PROJECT STRUCTURE EXAMPLE
+
+edge-detector-cpp
+│
+├── image
+│    └── Adeeb_.jpg
+│
+├── results
+│
+├── training_data
+│
+├── Dockerfile
+└── main.cpp
+
+

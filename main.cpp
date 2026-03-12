@@ -13,15 +13,14 @@
 
 using namespace std;
 
-
-
-vector<vector<int>> image_to_matrix(const char* path) {
+vector<vector<int>> image_to_matrix(const char *path)
+{
     return im_mat::get_matrix(path);
 }
 
 vector<vector<float>> inttofloat(
-    const vector<vector<int>>& input
-) {
+    const vector<vector<int>> &input)
+{
     int H = input.size();
     int W = input[0].size();
 
@@ -34,19 +33,23 @@ vector<vector<float>> inttofloat(
 }
 
 void save_matrix_to_csvf(
-    const vector<vector<float>>& matrix,
-    const char* filename
-) {
+    const vector<vector<float>> &matrix,
+    const char *filename)
+{
     ofstream file(filename);
-    if (!file.is_open()) return;
+    if (!file.is_open())
+        return;
 
     int H = matrix.size();
     int W = matrix[0].size();
 
-    for (int i = 0; i < H; i++) {
-        for (int j = 0; j < W; j++) {
+    for (int i = 0; i < H; i++)
+    {
+        for (int j = 0; j < W; j++)
+        {
             file << matrix[i][j];
-            if (j != W - 1) file << ",";
+            if (j != W - 1)
+                file << ",";
         }
         file << "\n";
     }
@@ -54,19 +57,23 @@ void save_matrix_to_csvf(
 }
 
 void save_matrix_to_csv(
-    const vector<vector<int>>& matrix,
-    const char* filename
-) {
+    const vector<vector<int>> &matrix,
+    const char *filename)
+{
     ofstream file(filename);
-    if (!file.is_open()) return;
+    if (!file.is_open())
+        return;
 
     int H = matrix.size();
     int W = matrix[0].size();
 
-    for (int i = 0; i < H; i++) {
-        for (int j = 0; j < W; j++) {
+    for (int i = 0; i < H; i++)
+    {
+        for (int j = 0; j < W; j++)
+        {
             file << matrix[i][j];
-            if (j != W - 1) file << ",";
+            if (j != W - 1)
+                file << ",";
         }
         file << "\n";
     }
@@ -74,23 +81,20 @@ void save_matrix_to_csv(
 }
 
 void matrix_to_image(
-    const vector<vector<int>>& data,
-    const char* outPath
-) {
+    const vector<vector<int>> &data,
+    const char *outPath)
+{
     mat_im::matrix_to_image(data, outPath);
 }
 
-
-
-
 vector<vector<int>> apply_operation_for_detction(
-    const vector<vector<float>>& input
-) {
+    const vector<vector<float>> &input)
+{
     auto blurred = img::gaussianBlur(input, 3);
     save_matrix_to_csvf(blurred, "training_data/gaussian.csv");
 
     img::EdgeResult grad = img::scharrEdge(blurred);
-    save_matrix_to_csvf(grad.Mag,   "training_data/grad_mag.csv");
+    save_matrix_to_csvf(grad.Mag, "training_data/grad_mag.csv");
     save_matrix_to_csvf(grad.Angle, "training_data/grad_angle.csv");
 
     auto nms = img::nonMaximumSuppression(grad.Mag, grad.Angle);
@@ -109,22 +113,27 @@ vector<vector<int>> apply_operation_for_detction(
     return final_edges;
 }
 
+int main(int argc, char *argv[])
+{
 
+    if (argc < 3)
+    {
+        cout << "Usage: edge_app <input_image> <output_image>\n";
+        return 0;
+    }
 
-int main() {
-
-    const char* inputPath  ="image\\Adeeb_.jpg";
-;   
-    const char* outputPath ="results\\output_edges.png";
+    const char *inputPath = argv[1];
+    const char *outputPath = argv[2];
 
     auto image_int = image_to_matrix(inputPath);
-    if (image_int.empty()) return 0;
+    if (image_int.empty())
+        return 0;
 
     save_matrix_to_csv(image_int, "training_data/orig.csv");
 
     auto image_float = inttofloat(image_int);
 
-    auto final_edges =apply_operation_for_detction(image_float);
+    auto final_edges = apply_operation_for_detction(image_float);
 
     matrix_to_image(final_edges, outputPath);
 

@@ -40,66 +40,100 @@ This project rebuilds the entire Canny pipeline from scratch, demonstrating a de
 
 ## 📁 Project Structure
 ```
-Canny-Edge-Detector-using-c-/
+edge-detector-cpp
 │
-├── gaussian/
+├── Gussian/
 ├── sobel/
-├── non_maximum_suppression/
-├── threshold/
+├── Threshold/
 ├── hysteresis/
 ├── morphology/
+├── non_maximum_suppression/
+├── stb/
 │
-├── stb/                  
-├── image/                
-├── training_data/       
+├── image/
+│ └── input images
 │
-├── build/                
+├── results/
+│ └── output images
+│
+├── training_data/
+│ └── intermediate CSV files
+│
+├── build/
+│
 ├── main.cpp
-├── README.md
-└── .gitignore
+├── Dockerfile
+└── README.md
 ```
 
 ---
+## ⚙️ Setup Instructions
 
-## 🛠️ Build Instructions
+This project can be run in two ways:
 
-### Prerequisites
-- GCC/G++ compiler
-- Make (optional)
-- Basic C++ development environment
+1. **Manual compilation**
+2. **Docker execution (Recommended)**
 
-### Step 1: Compile object files
+Docker is recommended because it removes dependency issues and allows anyone to run the project with a single command.
+
+---
+
+# 🐳 Docker Setup (Recommended)
+
+Docker ensures the project runs consistently across all systems without installing compilers or dependencies.
+
+## Step 1: Build the Docker Image
+
+Run this once in the project directory:
+
 ```bash
+docker build -t edge-detector .
+docker run -v ${PWD}:/data edge-detector /data/image/Adeeb_.jpg /data/results/output.png
+
+${PWD}  → current project directory
+/data   → mounted folder inside the container
+
+🖥️ Manual Setup
+
+If you prefer to compile manually, follow these steps.
+
+Prerequisites
+
+GCC / G++ compiler
+
+GNU binutils (ar)
+
+Basic C++ development environment
+Step 1: Compile object files
 g++ -c stb/im_mat.cpp -o build/im_mat.o
 g++ -c stb/mat_im.cpp -o build/mat_im.o
-g++ -c gaussian/gaussian.cpp -o build/gaussian.o
+g++ -c Gussian/gussian.cpp -o build/gussian.o
 g++ -c sobel/sobel.cpp -o build/sobel.o
 g++ -c non_maximum_suppression/nms.cpp -o build/nms.o
-g++ -c threshold/threshold.cpp -o build/threshold.o
+g++ -c Threshold/threshold.cpp -o build/threshold.o
 g++ -c hysteresis/hy.cpp -o build/hy.o
 g++ -c morphology/dilation.cpp -o build/dilation.o
 g++ -c morphology/erosion.cpp -o build/erosion.o
-```
 
-### Step 2: Create static library
-```bash
+Step 2: Create static library
 ar rcs build/libedge.a \
-    build/im_mat.o build/mat_im.o \
-    build/gaussian.o build/sobel.o \
-    build/nms.o build/threshold.o \
-    build/hy.o build/dilation.o build/erosion.o
-```
+build/im_mat.o \
+build/mat_im.o \
+build/gussian.o \
+build/sobel.o \
+build/nms.o \
+build/threshold.o \
+build/hy.o \
+build/dilation.o \
+build/erosion.o
 
-### Step 3: Link and build executable
-```bash
+Step 3: Build executable
 g++ main.cpp build/libedge.a -o edge_app
-```
 
-### Step 4: Run
-```bash
-./edge_app
-```
-
+Step 4: Run the program
+./edge_app <input_image> <output_image>
+Example:
+./edge_app image/Adeeb_.jpg results/output.png
 ---
 
 ## 🎯 Algorithm Pipeline
